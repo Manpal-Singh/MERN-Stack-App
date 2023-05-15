@@ -105,3 +105,33 @@ div.error {
 input.errorClass {
   border: 1px solid var(--error)
 }
+
+/* navbar */
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav button {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: 'Poppins';
+  cursor: pointer;
+  font: 1em;
+  margin-left: 1.25rem;
+}
+
+nav a {
+  margin-left: 0.75rem;
+}
+
+form.signup, form.login {
+  max-width: 25rem;
+  margin: 2.5rem auto;
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: 0.25rem;
+}

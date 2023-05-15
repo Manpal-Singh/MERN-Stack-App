@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext()
@@ -10,8 +11,14 @@ const WorkoutForm = () => {
   const [error, setError] = useState('')
   const [emptyFields, setEmptyFields] = useState([])
 
+  const {user} = useAuthContext()
+
   const addNewWorkout = async (e) => {
     e.preventDefault()
+    if(!user) {
+      setError('You must be Logged in')
+      return
+    }
     const workout = { title, load, reps }
     try {
       const response = await axios.post(
@@ -20,20 +27,21 @@ const WorkoutForm = () => {
         {
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
           },
         }
       )
-	//   const response = await fetch(
-    //     '/api/workouts', {
-	// 	  method: 'POST',
-	// 	  body: JSON.stringify(workout),
-	// 	  headers: {
-    //         'Content-Type': 'application/json',
-    //       }
-	// 	}
-    //   )
-	//   let json = await response.json()
-	//   console.log('err', json)
+      // const response = await fetch(
+      //     '/api/workouts', {
+      //   method: 'POST',
+      //   body: JSON.stringify(workout),
+      //   headers: {
+      //         'Content-Type': 'application/json',
+      //       }
+      // }
+      //   )
+      // let json = await response.json()
+      // console.log('err', json)
 	  
       if (response.statusText === 'OK') {
         setTitle('')

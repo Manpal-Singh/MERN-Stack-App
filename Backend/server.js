@@ -1,8 +1,10 @@
-require('dotenv').config()
+require("dotenv").config()
 
-const express = require('express')
-const workoutRoutes = require('./routes/workouts')
-const mongoose = require('mongoose') // ODM : object-data-model
+const express = require("express")
+const mongoose = require("mongoose") // ODM : object-data-model
+
+const workoutsRoutes = require("./routes/workouts")
+const usersRoutes = require("./routes/users")
 
 // express app
 const app = express()
@@ -15,16 +17,21 @@ app.use((req, res, next) => {
 })
 
 //routes (syntax: app.get(route, callbackFunction) alternative)
-app.use('/api/workouts', workoutRoutes)
+app.use("/api/workouts", workoutsRoutes)
+app.use("/api/users", usersRoutes)
 
 // connect to DB (connect is a promise)
-mongoose.connect(process.env.MONGODB_URI)
+mongoose
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     // listening to requests
     app.listen(process.env.PORT, () => {
-      console.log('App has connected with DB and listening on port :', process.env.PORT)
+      console.log(
+        "App has connected with DB and listening on port :",
+        process.env.PORT
+      )
     })
   })
   .catch((error) => {
-    console.log('Error while connecting to DB: ', error)
+    console.log("Error while connecting to DB: ", error)
   })
